@@ -12,13 +12,17 @@ import AgendarMapa from '../screens/AgendarMapa'
 import AgendarRequerimientos from '../screens/AgendarRequerimientos'
 import AgendarAsignacion from '../screens/AgendarAsignacion'
 import Blank from '../screens/Blank'
+import Calificar from '../screens/Calificar'
+import Detalles from '../screens/Detalles'
+import Perfil from '../screens/Perfil'
+import Caracterizacion from '../screens/Caracterizacion'
 
 const Stack = createStackNavigator()
 
 const AppStacks = () => {
     
     return (
-        <Stack.Navigator initialRouteName={"Home"}>
+        <Stack.Navigator initialRouteName={"Caracterizacion"}>
 
             <Stack.Screen name='Blank' component={Blank} options={{ headerShown:false }}/>
             <Stack.Screen name='Onboarding' component={Onboarding} options={{ headerShown:false }}/>
@@ -31,6 +35,9 @@ const AppStacks = () => {
             <Stack.Screen name='AgendarMapa' component={AgendarMapa} options={{ headerShown:false }}/>
             <Stack.Screen name='AgendarRequerimientos' component={AgendarRequerimientos} options={{ headerShown:false }}/>
             <Stack.Screen name='AgendarAsignacion' component={AgendarAsignacion} options={{ headerShown:false }}/>
+            <Stack.Screen name='Calificar' component={Calificar} options={{ headerShown:false }}/>
+            <Stack.Screen name='Detalles' component={Detalles} options={{ headerShown:false }}/>
+            <Stack.Screen name='Caracterizacion' component={Caracterizacion} options={{ headerShown:false }}/>
 
         </Stack.Navigator>
     )

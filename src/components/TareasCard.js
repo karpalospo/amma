@@ -12,8 +12,9 @@ const tareasImg = require('../../assets/tarea.png')
 const backtareasImg = require('../../assets/back-tareas.png')
 
 const TareasCard = ({
+    color="#0182E0",
     title="",
-    infoTareas = {total:5, completed: 1}, 
+    infoTareas = {total:1, completed: 0}, 
     tareas = [], 
     navigation, 
     callback
@@ -29,18 +30,18 @@ const TareasCard = ({
     } else {
         return (
             <Card bgColor="#E8F6FF" style={{marginVertical: 30}}>
-                <View style={[styles.cardTitle, {backgroundColor:"#0182E0"}]}>
+                <View style={[styles.cardTitle, {backgroundColor:color}]}>
                     <PadView padding="13 17">
                         <Text style={styles.cardTitleText}>{title}</Text>
                     </PadView>
                     <PadView rows justy="flex-end">
-                        <Image src={backtareasImg} size={50} />
-                        <Text style={[styles.cardTitleText, {fontSize:12, textAlign:"center", width:50, paddingRight:15}]}>{infoTareas.completed} / {infoTareas.total}</Text>
+                        <Image src={backtareasImg} tintColor="white" size={36} style={{marginRight:10}} />
+                        {/*<Text style={[styles.cardTitleText, {fontSize:12, textAlign:"center", width:50, paddingRight:15}]}>{infoTareas.completed} / {infoTareas.total}</Text>*/}
                     </PadView>
                 </View>
                 
                 <PadView padding="20">
-                    <View style={{height:40}} />
+                    <View style={{height:10}} />
                     <ProgressBar color="#3D86BF" progress={infoTareas.completed / infoTareas.total * 100} />
                     <View style={{height:20}} />
                     <TareasList tareas={tareas} callback={item => {
@@ -50,8 +51,9 @@ const TareasCard = ({
                 </PadView>
 
                 <PadView padding="15">
-                    <Button style={{backgroundColor: "#0182E0"}} title="Editar Tareas" onPress={() => navigation.navigate("tareas")} />
+                    <Button style={{backgroundColor: color}} title="Editar Tareas" onPress={() => navigation.navigate("tareas")} />
                 </PadView>
+                <View style={{height:30}} />
             </Card>
         )
     }
@@ -82,8 +84,8 @@ const styles = StyleSheet.create({
     cardTitleText: {
         fontSize:17,
         color: "white", 
-        fontFamily: "pp_regular", 
-        opacity:0.8
+        fontFamily: "pp_bold", 
+        opacity:0.9
     },
     
 })

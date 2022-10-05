@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useContext } from 'react'
 import { View, SafeAreaView, Text, StatusBar, Image, ScrollView, StyleSheet } from 'react-native'
 import { styles, COLORS } from '../global/styles'
-import { TareasCard, Button, InfoCard } from '../components'
+import { TareasCard, Button, InfoCard, Avatar } from '../components'
 import moment from 'moment/min/moment-with-locales';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { UtilitiesContext } from '../context/UtilitiesContext'
@@ -22,7 +22,8 @@ const cerrar = require("../../assets/cerrar.png")
 const tareasLocales = [
     {id: "1", date:moment().valueOf(), text:"Buscar a los niños a la ecuela"},
     {id: "2", date:moment().valueOf(), text:"Buscar a los niños a la ecuela"},
-    {id: "3",date:moment().valueOf(), text:"Buscar a los niños a la ecuela"}
+    {id: "3",date:moment().valueOf(), text:"Buscar a los niños a la ecuela"},
+    {id: "4",date:moment().valueOf(), text:"Presentar APP a javi"}
 ]
 
 const tareasServicio = [
@@ -31,7 +32,7 @@ const tareasServicio = [
     {id: "3",date:moment().valueOf(), text:"Buscar a los niños a la ecuela"}
 ]
 
-const Home = (props) => {
+const Home = ({navigation}) => {
 
 
     let pendiente;
@@ -63,24 +64,38 @@ const Home = (props) => {
             <StatusBar backgroundColor={COLORS.backgroundColor} barStyle="dark-content" />
             
             <View style={[styles.row, {position: "absolute", width: 80, height: 60, backgroundColor:"#C7F0F9", borderTopLeftRadius: 15, borderTopRightRadius: 15, left:0, bottom:0, width:"100%", zIndex: 10, paddingHorizontal: 30}]}>
-                <Image source={Menuicon1} style={{height: 25, width: 25}} tintColor="#7EA8CA" resizeMode="contain" />
-                <Image source={Menuicon2} style={{height: 25, width: 25}} tintColor="#7EA8CA" resizeMode="contain" />
+                <TouchableOpacity>
+                    <Image source={Menuicon1} style={{height: 25, width: 35}} tintColor="#7EA8CA" resizeMode="contain" />
+                    <Text style={_styles.buttonMenuLabel}>Inicio</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity>
+                    <Image source={Menuicon2} style={{height: 25, width: 45}} tintColor="#7EA8CA" resizeMode="contain" />
+                    <Text style={_styles.buttonMenuLabel}>Historial</Text>
+                </TouchableOpacity>
+
                 <View style={{width: 30}} />
                 
                 <View style={_styles.button}>
-                    <TouchableOpacity onPress={() => props.navigation.navigate("Agendar")} style={{padding:20}} >
+                    <TouchableOpacity onPress={() => navigation.navigate("Agendar")} style={{padding:20}} >
                         <Image source={agendar} style={{height: 30, width: 30}} tintColor="#ffffff" resizeMode="contain" />
                     </TouchableOpacity>
                 </View>
 
-                <Image source={Menuicon3} style={{height: 25, width: 25}} tintColor="#7EA8CA" resizeMode="contain" />
-                <Image source={Menuicon4} style={{height: 25, width: 25}} tintColor="#7EA8CA" resizeMode="contain" />
+                <TouchableOpacity>
+                    <Image source={Menuicon3} style={{height: 25, width: 35}} tintColor="#7EA8CA" resizeMode="contain" />
+                    <Text style={_styles.buttonMenuLabel}>Ayuda</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity>
+                    <Image source={Menuicon4} style={{height: 25, width: 35}} tintColor="#7EA8CA" resizeMode="contain" />
+                    <Text style={_styles.buttonMenuLabel}>Perfil</Text>
+                </TouchableOpacity>
+
             </View>
             
-            
-            
+
             <ScrollView>
-                
                 
                 <View style={[styles.row, {paddingHorizontal: 15, paddingTop: 6}]}>
                     <View />
@@ -96,7 +111,6 @@ const Home = (props) => {
                     </View>
                 </View>
 
-
                 <View style={{padding:20, width:"100%"}}>
                     
                     {showPendiente && pendiente &&
@@ -106,6 +120,20 @@ const Home = (props) => {
                         <TouchableOpacity activeOpacity={0.8} onPress={() => setShowPendiente(false)}><Image source={cerrar} style={{width: 25, height:25}} resizeMode="contain" /></TouchableOpacity>
                     </View>
                     }
+
+                    { false && 
+                    <TouchableOpacity style={[styles.row, {backgroundColor:"#FFF1D4", padding:15, borderRadius: 8}]} activeOpacity={0.9} onPress={() => navigation.navigate("Detalles")}>
+                        <Avatar size={65} position="relative" />
+                        <View style={{flex:1, paddingLeft:10}}>
+                            <Text style={_styles.label}>Servicio HOGAR</Text>
+                            <Text style={_styles.text}>Asignado</Text>
+                        </View>
+                        <View>
+                            <View style={styles.row}><Text style={_styles.text2}>Día</Text><Text style={_styles.text3}>08/09/2022</Text></View>
+                            <View style={styles.row}><Text style={_styles.text2}>Hora</Text><Text style={_styles.text3}>6:00 PM</Text></View>
+                        </View>
+                    </TouchableOpacity>
+}
 
                     {caracterizacion && 
                     <InfoCard 
@@ -117,7 +145,8 @@ const Home = (props) => {
                     />
                     }
 
-                    <View style={{width:"100%", position:"relative", height:200}}>
+
+                    <View style={{width:"100%", position:"relative", height:200, marginTop: 30}}>
                         <Image source={articulo1} style={{width: "100%", backgroundColor:"lime", borderRadius: 20, position:"absolute"}} resizeMode="cover" />
                         <View style={{width:"100%", position:"absolute", zIndex: 2}}>
                             <Image source={articulo1} style={{width: "100%", opacity:0}} resizeMode="cover" />
@@ -129,6 +158,7 @@ const Home = (props) => {
                         </View>
                     </View>
 
+
                     {showTareas &&
                     <InfoCard 
                         title="Asigna tareas al personal de aseo"
@@ -137,19 +167,20 @@ const Home = (props) => {
                     />
                     }
 
-                    {solicitud.tareas && solicitud.tareas.length > 0 &&
+                    {true &&
                     <TareasCard 
                         title="LISTA DE TAREAS DEL SERVICIO"
-                        navigation={props.navigation} 
+                        navigation={navigation} 
                         callback={item => {}} 
                         tareas={solicitud.tareas}
                     />
                     }
 
                     
-                    <TareasCard 
+                    <TareasCard
+                        color="#00BCBC"
                         title="MIS TAREAS PERSONALES"
-                        navigation={props.navigation} 
+                        navigation={navigation} 
                         callback={item => {}} 
                         tareas={tareasLocales}
                     />
@@ -182,5 +213,16 @@ const _styles = StyleSheet.create({
         borderRadius:35, 
         borderWidth: 5, 
         borderColor: "#fff"
-    }
+    },
+
+    buttonMenuLabel: {
+        fontSize:12,
+        textAlign: "center",
+        color: "#555"
+    },
+
+    label: {fontSize:15, color: "#6F757A", fontFamily: "pp_bold"},
+    text: {fontSize:15, color: "#00A0BC", fontFamily: "pp_regular"},
+    text2: {fontSize:13, color: "#00A0BC", fontFamily: "pp_regular", paddingRight:5},
+    text3: {fontSize:13, color: "#6F757A", fontFamily: "pp_regular"},
 })

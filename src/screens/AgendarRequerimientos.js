@@ -38,7 +38,7 @@ const AgendarRequerimientos = ({navigation}) => {
                 <View style={{paddingHorizontal:20}}>
 
                     <Select label="Mis solicitudes guardadas" items={itemsEspacios} />
-                    <Input label="Tipo de servicio" value={servicios} onChange={text => setServicios(text)} />
+                    <Select label="Tipo de Servicio" items={itemsEspacios} />
                     
                     <View style={{height:10}} />
 

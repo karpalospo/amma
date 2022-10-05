@@ -1,31 +1,36 @@
 import React, {useState} from 'react';
-import { View, TouchableOpacity, StyleSheet, Text} from 'react-native';
-import { styles, COLORS } from '../global/styles'
+import { View, TouchableOpacity, Text, TextInput} from 'react-native';
+import { styles } from '../global/styles'
 
-export default ({onChange = () => {}}) => {
+const Jornada = ({items=[], onChange = () => {}, justify="space-between", numMeses, changeMeses = () => {}}) => {
 
-    const [index, setIndex] = useState(-1);
+    const [currentindex, setIndex] = useState(-1);
 
     return (
-        <View style={[styles.row]}>
-            <TouchableOpacity activeOpacity={0.9} onPress={() => {onChange(0); setIndex(0)}} >
-                <Text style={[_styles.option, index == 0 ? _styles.optionActive : {}]}>Mañana</Text>
-                <Text style={_styles.optionText}>6 am a 12 Pm</Text>
-            </TouchableOpacity>
-            <TouchableOpacity activeOpacity={0.9} onPress={() => {onChange(0); setIndex(1)}}>
-                <Text style={[_styles.option, index == 1 ? _styles.optionActive : {}]}>Tarde</Text>
-                <Text style={_styles.optionText}>1 pm a 6 pm</Text>
-            </TouchableOpacity>
-            <TouchableOpacity activeOpacity={0.9} onPress={() => {onChange(0); setIndex(2)}}>
-                <Text style={[_styles.option, index == 2 ? _styles.optionActive : {}]}>Completa</Text>
-                <Text style={_styles.optionText}>6 am a 6 Pm</Text>
-            </TouchableOpacity>
+        <View style={[styles.row, {justifyContent: justify}]}>
+            {
+                items.map((item, index) =>
+                    <TouchableOpacity key={index} activeOpacity={0.9} onPress={() => {onChange(item.value); setIndex(index)}} style={{marginHorizontal: 8}} >
+                        <Text style={[_styles.option, currentindex == index ? _styles.optionActive : {}]}>{item.label}</Text>
+                        {item.label2 && <Text style={_styles.optionText}>{item.label2}</Text>}
+                    </TouchableOpacity>
+                )
+            }
+            {numMeses && 
+                <TextInput
+                style={{marginLeft:10, color:"#01BFE0", backgroundColor: "white", borderColor: "#B4E3F1", borderWidth: 1, borderRadius: 8, height:45, paddingHorizontal:5, textAlign:"center"}}
+                    onChangeText={text => changeMeses(text)}
+                    keyboardType="decimal-pad"
+                    value={numMeses}
+                />
+            }
         </View>
     )
-
 }
 
-const _styles = StyleSheet.create({
+export default Jornada
+
+const _styles = {
 
     option: {
         backgroundColor: "#fff",
@@ -52,4 +57,4 @@ const _styles = StyleSheet.create({
         textAlign: "center",
         fontFamily: "pp_regular"
     }
-})
+}

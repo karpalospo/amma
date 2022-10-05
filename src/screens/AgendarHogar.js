@@ -13,7 +13,8 @@ LocaleConfig.locales['es'] = {
     dayNames: ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sábado'],
     dayNamesShort: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
     today: 'Hoy\'Hoy'
-  };
+};
+
 LocaleConfig.defaultLocale = 'es';
 
 moment.locale('es-us')
@@ -24,15 +25,43 @@ moment.updateLocale('es-us', {
     workingWeekdays: [1, 2, 3, 4, 5, 6]
 });
 
+const jornadas = [
+    {label: "Mañana", value:"mañana", label2:"6 am a 12 pm"},
+    {label: "Tarde", value:"tarde", label2:"1 pm a 6 pm"},
+    {label: "Completa", value:"completa", label2:"6 am a 6 pm"},
+]
+const repeticiones = [
+    {label:"Semanal", value:"semanal"}, 
+    {label:"Mensual", value:"mensual"}
+]
+
+
+const dayStyle = {
+    selected: true,
+    customStyles: {
+        container: {
+            backgroundColor: '#01BFE0',
+            borderRadius: 25
+        },
+        text: {
+            color: 'white'
+        },
+    }
+}
+
+
+
 const AgendarHogar = ({navigation}) => {
 
     let esteDia = moment().businessAdd(0), maxDay, minDay
     minDay = esteDia.format("YYYY-MM-DD")
     maxDay = moment().businessAdd(60).format("YYYY-MM-DD")
 
-    
     const [switche, setSwitche] = useState(false);
-    const [jornadaIndex, setJornadaIndex] = useState(-1);
+    const [jornada, setJornada] = useState();
+    const [repeticion, setRepeticion] = useState();
+    const [meses, setMeses] = useState("12");
+    const [selected, setSelected] = useState({});
 
     return (
         <SafeAreaView style={styles.main}>
@@ -54,22 +83,33 @@ const AgendarHogar = ({navigation}) => {
                         paddingRight: 20,
                     }}
                     minDate={minDay}
-                    // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
                     maxDate={maxDay}
                     markingType={'custom'}
-                    //markedDates={rango}
+                    markedDates={selected}
                     onDayPress={data => {
-                        /*if(rango[data.dateString] != undefined) {
-                            this.props.onSelect(data); 
-                            this.setState({calendarioModal: false, date: data.timestamp})
-                        }*/
+                        let d = {...selected}, day = data.dateString
+                        if(selected[day] && selected[day].selected) delete d[day]
+                        else {
+                            d[day] = {...dayStyle}
+                            if(repeticion == "semanal") {
+                                d[moment(day).add(7, 'd').format("YYYY-MM-DD")] = {...dayStyle}
+                                d[moment(day).add(14, 'd').format("YYYY-MM-DD")] = {...dayStyle}
+                                d[moment(day).add(21, 'd').format("YYYY-MM-DD")] = {...dayStyle}
+                            } else if(repeticion == "mensual") {
+                                for(let i = 1; i < meses - 1; i++)
+                                    d[moment(day).add(i, 'M').format("YYYY-MM-DD")] = {...dayStyle}
+                            }
+     
+                        }
+                        setSelected(d)
+                        
                     }}
                     theme={{
                         backgroundColor: '#F8FCFF',
                         calendarBackground: '#F8FCFF',
                         todayTextColor: '#00adf5',
-                        dayTextColor: '#CCC',
-                        textDisabledColor: '#CCC',
+                        dayTextColor: '#2d4150',
+                        textDisabledColor: '#d9e1e8',
                         dotColor: '#00adf5',
                         selectedDotColor: '#01BFE0',
                         arrowColor: '#01BFE0',
@@ -98,11 +138,11 @@ const AgendarHogar = ({navigation}) => {
                         value={switche}
                     />
                 </View>
-                {switche && <Jornada onChange={index => setJornadaIndex(index)} />}
-                <View style={{height:20}}></View>
+                {switche && <Jornada items={repeticiones} justify="center" numMeses={meses} changeMeses={text => setMeses(text)} onChange={value => setRepeticion(value)} />}
+                <View style={{height:30}}></View>
                 <Text style={{fontSize: 16, fontFamily:"pp_regular", color:"#00A0BC", paddingRight:4}}>Jornada que deseas</Text>
                 <View style={{height:10}}></View>
-                <Jornada onChange={index => setJornadaIndex(index)} />
+                <Jornada items={jornadas} onChange={value => setJornada(value)} />
 
                 <View style={{height:50}}></View>
 

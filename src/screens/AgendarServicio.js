@@ -5,11 +5,15 @@ import {Header} from '../components'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
 
-const aseo = require("../../assets/aseo.png")
-const fumigacion = require("../../assets/fumigacion.png")
-const arreglos = require("../../assets/arreglos.png")
+const aseo = require("../../assets/img1.png")
+const fumigacion = require("../../assets/img2.png")
+const arreglos = require("../../assets/img3.png")
+const hogar = require("../../assets/hogar.png")
+const empresa = require("../../assets/empresa.png")
 
 const Agendar = ({navigation}) => {
+
+    const [menu1, setMenu] = useState(false)
 
     return (
         <SafeAreaView style={styles.main}>
@@ -18,20 +22,38 @@ const Agendar = ({navigation}) => {
     
                 <Text style={{paddingVertical:35, color:"#00A0BC", fontSize: 17, paddingLeft:20}}>Elige el tipo de servicio que necesitas</Text>
 
-                <TouchableOpacity onPress={() => navigation.navigate("AgendarHogar")} style={[styles.rowLeft, _styles.item]}>
-                    <Image source={aseo} style={_styles.image} resizeMode="contain" />
-                    <Text style={_styles.itemText}>ASEO</Text>
-                </TouchableOpacity>
-                <View style={{height:20}} />
-                <TouchableOpacity style={[styles.rowLeft, _styles.item, {backgroundColor: "#00BCBC"}]}>
-                    <Image source={fumigacion} style={_styles.image} resizeMode="contain" />
-                    <Text style={_styles.itemText}>FUMIGACIÓN</Text>
-                </TouchableOpacity>
-                <View style={{height:20}} />
-                <TouchableOpacity style={[styles.rowLeft, _styles.item, {backgroundColor: "#0056BC"}]}>
-                    <Image source={arreglos} style={_styles.image} resizeMode="contain" />
-                    <Text style={_styles.itemText}>ARREGLOS</Text>
-                </TouchableOpacity>
+                {!menu1 && 
+                <View>
+                    <TouchableOpacity onPress={() => setMenu(1)} style={[styles.rowLeft, _styles.item]}>
+                        <Image source={hogar} style={_styles.image} resizeMode="contain" />
+                        <Text style={_styles.itemText}>HOGAR</Text>
+                    </TouchableOpacity>
+                    <View style={{height:20}} />
+                    <TouchableOpacity onPress={() => setMenu(2)} style={[styles.rowLeft, _styles.item, {backgroundColor: "#0056BC"}]}>
+                        <Image source={empresa} style={_styles.image} resizeMode="contain" />
+                        <Text style={_styles.itemText}>EMPRESA</Text>
+                    </TouchableOpacity>
+                </View>
+                }
+
+                {menu1 && 
+                <View>
+                    <TouchableOpacity onPress={() => navigation.navigate("AgendarHogar")} style={[styles.rowLeft, _styles.item]}>
+                        <Image source={aseo} style={_styles.image} resizeMode="contain" />
+                        <Text style={_styles.itemText}>ASEO</Text>
+                    </TouchableOpacity>
+                    <View style={{height:20}} />
+                    <TouchableOpacity onPress={() => navigation.navigate("AgendarHogar")} style={[styles.rowLeft, _styles.item, {backgroundColor: "#00BCBC"}]}>
+                        <Image source={fumigacion} style={_styles.image} resizeMode="contain" />
+                        <Text style={_styles.itemText}>FUMIGACIÓN</Text>
+                    </TouchableOpacity>
+                    <View style={{height:20}} />
+                    <TouchableOpacity onPress={() => navigation.navigate("AgendarHogar")} style={[styles.rowLeft, _styles.item, {backgroundColor: "#0056BC"}]}>
+                        <Image source={arreglos} style={_styles.image} resizeMode="contain" />
+                        <Text style={_styles.itemText}>ARREGLOS</Text>
+                    </TouchableOpacity>
+                </View>
+                }
 
             </ScrollView>
         </SafeAreaView>
@@ -61,6 +83,7 @@ const _styles = {
         width: 100,
         borderRadius: 51,
         borderWidth:2,
-        borderColor: "white"
+        borderColor: "white",
+        backgroundColor: "white",
     }
 }

@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef, useContext } from 'react'
-import { View, SafeAreaView, Text, StatusBar, ScrollView, StyleSheet, Image } from 'react-native'
+import { View, SafeAreaView, Text, ScrollView, Image } from 'react-native'
 import { styles, COLORS } from '../global/styles'
-import {Button, Header} from '../components'
+import {Button, Header, Avatar} from '../components'
+
 
 
 const deco1 = require("../../assets/deco1.png")
-const mujer = require("../../assets/mujer.png")
+
 
 const AgendarAsignacion = ({navigation}) => {
 
@@ -15,18 +16,16 @@ const AgendarAsignacion = ({navigation}) => {
             <Header label="Agendar" navigation={navigation} />
 
             <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled" style={{padding:20, width:"100%"}}>
-    
-                
 
-                <View style={{height:20}} />
-                <Text style={_styles.title}>Felicidades</Text>
-                <Text style={_styles.p}>Te hemos asignado al personal ideal para ti</Text>
 
-                <View style={{height:20}} />
+                <Text style={_styles.title}>Solicitud Programada</Text>
+
+
+                <View style={{height:60}} />
                 <View style={styles.rowCenter}>
                     <View style={_styles.image}>
-                        <Image source={deco1} style={{width:"100%", height: "90%"}} resizeMode="contain" />
-                        <Image source={mujer} style={{width:120, height: 120, position:"absolute", top: 0, left: "50%", marginLeft:-60, borderRadius:60, borderWidth: 3, borderColor:"#00A0BC"}} resizeMode="contain" />
+                        <Image source={deco1} style={{width:"100%", height: 250, marginTop: -65, marginLeft: -10}} resizeMode="contain" />
+                        <Avatar />
                     </View>
                 </View>
                 <View style={{height:20}} />
@@ -59,7 +58,7 @@ export default AgendarAsignacion
 
 
 const _styles = {
-    title: {fontSize:23, color: "#00A0BC", textAlign: "center", fontFamily: "pp_regular"},
+    title: {fontSize:26, color: "#00A0BC", textAlign: "center", fontFamily: "pp_regular"},
     p: {fontSize:15, color: "#6F757A", textAlign: "center", marginHorizontal: 20, marginVertical: 10, fontFamily: "pp_regular"},
     label: {fontSize:15, color: "#6F757A", fontFamily: "pp_bold"},
     text: {fontSize:15, color: "#6F757A", fontFamily: "pp_regular"},

@@ -22,7 +22,7 @@ export const styles = StyleSheet.create({
     H3: {fontFamily: "pp_bold", fontSize:17},
     input: {width:"100%", height: 56, backgroundColor: "#ffffff", marginVertical:7, borderRadius: 10, paddingHorizontal: 15, paddingVertical: 18, fontFamily: "rns", fontSize: 18, borderColor:"#ccc", borderWidth: 1},
     link: {padding:3, color: COLORS.blueText, fontSize:18, fontFamily: "rns_semi"},
-    row: {width:"100%", flexDirection:"row", alignItems:"center", justifyContent: "space-between"},
+    row: {flexDirection:"row", alignItems:"center", justifyContent: "space-between"},
     rowCenter: {flexDirection:"row", alignItems:"center", justifyContent: "center"},
     rowLeft: {flexDirection:"row", alignItems:"center", justifyContent: "flex-start"},
     rowRight: {flexDirection:"row", alignItems:"center", justifyContent: "flex-end"},

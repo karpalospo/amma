@@ -6,19 +6,7 @@ export const URL = {
 
 
 
-const HTTP_STATUS_CODE = {
-    OK: 200,
-    CORRECT: 201, 
-    BAD_REQUEST: 400,
-    FORBIDDEN: 401,
-    NOT_FOUND: 404,
-    ERROR_SERVER: 500,
-    BAD_GATEWAY: 502,
-}
-
 const HEADER_JSON =  { 'content-type': 'application/json',  "api": "Amma2022" } 
-const HEADER_FORM_ENCODED =  {'Content-Type': 'application/x-www-form-urlencoded'}
-const HEADER_FORM_DATA = {'content-type': 'multipart/form-data'}
 
 const HTTP_REQUEST_METHOD = {
     GET: 'GET',
@@ -27,38 +15,6 @@ const HTTP_REQUEST_METHOD = {
     DELETE: 'DELETE',
     HEAD: 'HEAD',
 }
-
-
-export const ROUTES = 
-{
-    MAIN: "principal",
-    DICTIONARY: "diccionario",
-    BABY: "cuidadobebe",
-}
-
-
-export const ORDER_BY = 
-{
-    PERCENT: "PJ",
-    DESCRIPTION: "DS",
-    GREATER: "MY", // From greater value to lower
-    LOWER: "MN", // From lower value to greater
-}
-
-export const SEARCH_BY = 
-{
-    CODE: 'code',
-    BAR_CODE: 'bar_code',
-    TEXT: 'text',
-}
-
-export const IN_OFFER = 
-{
-    YES: "S",
-    NO: "N",
-}
-
-
 
 const fetchAsync = async (url, method, { body = {}, headers = {'content-type': 'application/json'}} = {}) => 
 {
@@ -71,7 +27,7 @@ const fetchAsync = async (url, method, { body = {}, headers = {'content-type': '
     try {
         const fetchResponse = await fetch(url, form); 
         
-        response.error = (fetchResponse.status !== HTTP_STATUS_CODE.OK);
+        response.error = (fetchResponse.status !== 200);
         response.message = await fetchResponse.json();
         
     } catch (error) {
@@ -88,7 +44,11 @@ export const API = {
     GET: {
 
         async MisSolicitudes (id) {
-            return await fetchAsync(`${URL.server2}/api/request/viewc/${id}`, HTTP_REQUEST_METHOD.GET, {headers: HEADER_JSON});
+            return await fetchAsync(`${URL.server2}/api/request/viewc/${id}`, "GET", {headers: HEADER_JSON});
+        },
+
+        async getPreguntas () {
+            return await fetchAsync(`${URL.server2}/api/question_asnwer/viewg`, "GET", {headers: HEADER_JSON});
         },
     },
 

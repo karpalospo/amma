@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef, useContext } from 'react'
-import { View, SafeAreaView, Text, ScrollView, Dimensions } from 'react-native'
+import { View, SafeAreaView, Text, ScrollView, Dimensions, Image } from 'react-native'
 import { styles, COLORS } from '../global/styles'
 import {Room, Input, Select, TextArea, Button, Header} from '../components'
 
 import MapView, {Marker} from 'react-native-maps';
-
+import Geocoder from 'react-native-geocoding';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 
 
@@ -36,35 +36,40 @@ const itemsTamano = [
     {id:4, label:"Grande (mas de 200 mts2)", value:4},
 ]
 
+const marker = require("../../assets/pin.png")
+
 
 const AgendarMapa = ({navigation}) => {
 
     const [checked, setChecked] = useState(false)
     const [guardar, setGuardarChecked] = useState(false)
+    const [direccion, setDireccion] = useState(false)
 
     const [mapRegion, setMapRegion] = useState({
-        latitude: 10.795556,
-        longitude: -74.919444,
+        latitude: 10.9838119,
+        longitude: -74.8180175,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
     })
 
     const [ubicacion, setUbicacion] = useState("")
     const [nombre, setNombre] = useState("")
+    const [otra, setOtra] = useState("")
+
+    Geocoder.init("AIzaSyCSHufZP3SrsM_B5syDB6HugWbbgqDqLxE");
 
     const changePos = (value) => {
         
         setMapRegion(value)
 
-        /*Geocoder.from(value.latitude, value.longitude).then(json => {
+        Geocoder.from(value.latitude, value.longitude).then(json => {
         	var addressComponent = json.results[0];
             var last = addressComponent.address_components[0].long_name
             var first = addressComponent.address_components[1].long_name
             var barrio = addressComponent.address_components[2].long_name
-			setDireccion(`${first} ${last} ${barrio}`)
-            if(opener == 1) setState({dir1:`${first} ${last} ${barrio}`})
-            else if(opener == 2) setState({dir2:`${first} ${last} ${barrio}`})
-		}).catch(error => console.warn(error));*/
+			setUbicacion(`${first} ${last} ${barrio}`)
+     
+		}).catch(error => console.warn(error));
 
     }
     
@@ -75,18 +80,24 @@ const AgendarMapa = ({navigation}) => {
 
             <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled" style={{width:"100%"}}>
 
-                <MapView 
-                    style={_styles.map} 
-                    initialRegion={mapRegion}
-                    showsUserLocation={true}
-                    onRegionChangeComplete={changePos}
-                >
+                <View style={{position: "relative"}}>
+                    <MapView 
+                        style={_styles.map} 
+                        initialRegion={mapRegion}
+                        showsUserLocation={true}
+                        onRegionChangeComplete={changePos}
+                    >
 
-                </MapView>
+                    </MapView>
 
-                <Text style={_styles.textDark}>Por su primer servicio agendado reciba nuestr...</Text>
+                    <View style={{height:50, width:50, position:"absolute", left:width / 2 - 25, top:150 - 40, justifyContent:"center", alignItems:"center", zIndex:2}} >
+                        <Image source={marker} style={{width:30}} resizeMode="contain" />
+                    </View>
+                </View>
+
+                <Text style={_styles.textDark}>Publicidad</Text>
                     
-                <View style={{padding:20}}>
+                <View style={{paddingHorizontal:20}}>
 
                     <Select label="Mis espacios guardados" items={itemsEspacios} />
                     <Input label="Ubicación" value={ubicacion} onChange={text => setUbicacion(text)} />
@@ -105,7 +116,7 @@ const AgendarMapa = ({navigation}) => {
                     <Room label="Estudios" />
                     <Room label="Terrazas" />
                     
-                    <TextArea placeholder="Otra?, especifíquela" value={ubicacion} onChange={text => setUbicacion(text)} />
+                    <TextArea placeholder="Otra?, especifíquela" value={otra} onChange={text => setOtra(text)} />
                     
                     <View style={{height:40}} />
                     <Text style={[styles.H1, {color: "#00A0BC", paddingLeft: 5}]}>¿Quienes habitan la casa?</Text>
@@ -210,7 +221,9 @@ const _styles = {
         backgroundColor: "#00A0BC", 
         paddingVertical: 10, 
         paddingHorizontal: 20, 
-        color:"white"
+        color:"white",
+        fontSize: 17,
+        textAlign: "center"
     }
 
     

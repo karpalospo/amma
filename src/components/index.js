@@ -12,8 +12,9 @@ import _Select from "./Select";
 import _TextArea from "./TextArea";
 import _Header from "./Header";
 import _InfoCard from "./InfoCard";
-
-
+import _Avatar from "./Avatar";
+import _TouchItem from "./TouchItem";
+import _TouchItem2 from "./TouchItem2";
 
 export const Button = _Button;
 export const Card = _Card;
@@ -29,4 +30,7 @@ export const Select = _Select;
 export const TextArea = _TextArea;
 export const Header = _Header;
 export const InfoCard = _InfoCard;
+export const Avatar = _Avatar;
+export const TouchItem = _TouchItem;
+export const TouchItem2 = _TouchItem2;
 
