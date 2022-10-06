@@ -57,6 +57,10 @@ export const API = {
         async login (email, password) {
             return await fetchAsync(`${URL.server2}/api/usuarios/login`, HTTP_REQUEST_METHOD.POST, {body: JSON.stringify({username: email, password}), headers: HEADER_JSON});
         },
+        
+        async save_pregunta (data) {
+            return await fetchAsync(`${URL.server2}/api/applicant_questions/create`, HTTP_REQUEST_METHOD.POST, {body: JSON.stringify(data), headers: HEADER_JSON});
+        },
 
         async UpdateProfile (data) {
             return await fetchAsync(`${URL.server2}/update`, HTTP_REQUEST_METHOD.POST, {body: JSON.stringify(data), headers: HEADER_JSON});

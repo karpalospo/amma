@@ -46,9 +46,7 @@ const Home = ({navigation}) => {
 
     useEffect(() => {
         (async function () {
-            //if(!user || !user.logged) return
-            //const res = await API.GET.MisSolicitudes(user.id)
-            const res = await API.GET.MisSolicitudes(23)
+            const res = await API.GET.MisSolicitudes(user.id)
             if(!res.error && res.message.result.length > 0) 
             setSolicitud(res.message.result[0])
          
@@ -111,18 +109,18 @@ const Home = ({navigation}) => {
                     </View>
                 </View>
 
-                <View style={{padding:20, width:"100%"}}>
+                <View style={{paddingHorizontal:20, width:"100%"}}>
                     
                     {showPendiente && pendiente &&
-                    <View style={{flexDirection:"row", alignItems:"center", backgroundColor:"white", borderRadius: 30, elevation: 5, padding: 10}}>
+                    <View style={{flexDirection:"row", alignItems:"center", backgroundColor:"white", borderRadius: 30, elevation: 5, padding: 10, marginVertical: 10}}>
                         <Image source={exclamacion} style={{width: 25, height:25}} resizeMode="contain" />
                         <Text style={{paddingHorizontal: 7, color: "#6F757A", flex: 1}}>Tu solicitud está en espera de aprobación</Text>
                         <TouchableOpacity activeOpacity={0.8} onPress={() => setShowPendiente(false)}><Image source={cerrar} style={{width: 25, height:25}} resizeMode="contain" /></TouchableOpacity>
                     </View>
                     }
 
-                    { false && 
-                    <TouchableOpacity style={[styles.row, {backgroundColor:"#FFF1D4", padding:15, borderRadius: 8}]} activeOpacity={0.9} onPress={() => navigation.navigate("Detalles")}>
+                    {Object.keys(solicitud) > 0 && 
+                    <TouchableOpacity style={[styles.row, {backgroundColor:"#FFF1D4", padding:15, borderRadius: 8, marginVertical: 10}]} activeOpacity={0.9} onPress={() => navigation.navigate("Detalles")}>
                         <Avatar size={65} position="relative" />
                         <View style={{flex:1, paddingLeft:10}}>
                             <Text style={_styles.label}>Servicio HOGAR</Text>
@@ -133,21 +131,21 @@ const Home = ({navigation}) => {
                             <View style={styles.row}><Text style={_styles.text2}>Hora</Text><Text style={_styles.text3}>6:00 PM</Text></View>
                         </View>
                     </TouchableOpacity>
-}
+                    }
 
                     {caracterizacion && 
                     <InfoCard 
                         title="Queremos asignarte al personal ideal"
                         text="Nuestro equipo de profesionales es  maravilloso, sin embargo nos guartaría enviarte a alguien con quien te sientas cómodo y te brinde un servicio más cercano."
-                        onCallToAction={() => {}}
+                        onCallToAction={() => navigation.navigate("Caracterizacion")}
                         CallToActionTitle="Déjanos conocerte"
                         onClose={() => setShowCaracterizacion(false)}
                     />
                     }
 
 
-                    <View style={{width:"100%", position:"relative", height:200, marginTop: 30}}>
-                        <Image source={articulo1} style={{width: "100%", backgroundColor:"lime", borderRadius: 20, position:"absolute"}} resizeMode="cover" />
+                    <View style={{width:"100%", position:"relative", height:200}}>
+                        <Image source={articulo1} style={{width: "100%", borderRadius: 20, position:"absolute"}} resizeMode="cover" />
                         <View style={{width:"100%", position:"absolute", zIndex: 2}}>
                             <Image source={articulo1} style={{width: "100%", opacity:0}} resizeMode="cover" />
                             <View style={{marginTop:-150, padding:20}}>
@@ -167,7 +165,7 @@ const Home = ({navigation}) => {
                     />
                     }
 
-                    {true &&
+                    {Object.keys(solicitud) > 0 &&
                     <TareasCard 
                         title="LISTA DE TAREAS DEL SERVICIO"
                         navigation={navigation} 

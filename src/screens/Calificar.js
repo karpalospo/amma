@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from 'react'
 import { View, SafeAreaView, Text, ScrollView, Image } from 'react-native'
 import { styles, COLORS } from '../global/styles'
 import {Button, Header, Avatar, TextArea} from '../components'
-import StarRating from 'react-native-star-rating';
+import { Rating, AirbnbRating } from 'react-native-ratings';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
@@ -12,7 +12,6 @@ const deco1 = require("../../assets/deco1.png")
 
 const Calificar = ({navigation}) => {
 
-    //react-native-star-rating
     const [comentario, setComentario] = useState("")
     const [calificacion, setCalificacion] = useState(3)
     const [opciones, setOpciones] = useState([
@@ -47,18 +46,14 @@ const Calificar = ({navigation}) => {
                 <Text style={_styles.title}>Liliana Martinez</Text>
 
                 <View style={styles.rowCenter}>
-                    <StarRating
-                        disabled={false}
-                        maxStars={5}
-                        rating={calificacion}
-                        emptyStar={'star-o'}
-                        fullStar={'star'}
-                        iconSet={'FontAwesome'}
-                        selectedStar={(rating) => setCalificacion(rating)}
-                        fullStarColor={'#E5B95F'}
-                        emptyStarColor={'#E5B95F'}
-                        starSize={30}
-                        starStyle={{marginHorizontal:5}}
+                    
+                    <Rating
+                        startingValue={calificacion}
+                        ratingColor='#E5B95F'
+                        onFinishRating={rating => setCalificacion(rating)}
+                        style={{ paddingVertical: 10 }}
+                        imageSize={30}
+           
                     />
                 </View>
 

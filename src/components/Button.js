@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TouchableOpacity, View, StyleSheet, ActivityIndicator} from 'react-native';
+import { Text, View, StyleSheet, ActivityIndicator, TouchableOpacity} from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; 
 
 export default ({style, loading, onPress, onPress2, title, title2, textColor, icon, fontSize=17, textDeco}) => {

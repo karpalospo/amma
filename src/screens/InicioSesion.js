@@ -5,7 +5,7 @@ import { API } from '../global/services'
 import {Button, Input} from '../components'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { UtilitiesContext } from '../context/UtilitiesContext'
-import OlvidoContrasena from './OlvidoContrasena'
+
 
 
 const deco = require("../../assets/deco.png")
@@ -31,6 +31,7 @@ const CrearCuenta = ({navigation}) => {
             setUser({...res.message.user, logged: true})
 
         } else {
+            setPassword("")
             Alert.alert("Servicios Amma", "Usuario y/o Contraseña no válidos")
         }
     }

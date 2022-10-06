@@ -22,7 +22,7 @@ const Stack = createStackNavigator()
 const AppStacks = () => {
     
     return (
-        <Stack.Navigator initialRouteName={"Caracterizacion"}>
+        <Stack.Navigator initialRouteName={"Blank"}>
 
             <Stack.Screen name='Blank' component={Blank} options={{ headerShown:false }}/>
             <Stack.Screen name='Onboarding' component={Onboarding} options={{ headerShown:false }}/>
