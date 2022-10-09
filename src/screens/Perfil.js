@@ -2,10 +2,10 @@ import React, { useState, useEffect, useRef, useContext } from 'react'
 import { View, SafeAreaView, Text, ScrollView, Image } from 'react-native'
 import { styles, COLORS } from '../global/styles'
 import {Button, Header, Avatar, TouchItem} from '../components'
-
+import { UtilitiesContext } from '../context/UtilitiesContext'
 
 const deco1 = require("../../assets/deco1.png")
-const user = require("../../assets/icon_user.png")
+const usuario = require("../../assets/icon_user.png")
 const bandera = require("../../assets/icon_bandera.png")
 const cerrar = require("../../assets/icon_cerrar.png")
 
@@ -13,15 +13,9 @@ const cerrar = require("../../assets/icon_cerrar.png")
 
 const Perfil = ({navigation}) => {
 
-    //react-native-star-rating
-    const [comentario, setComentario] = useState("")
-    const [opciones, setOpciones] = useState([
-        {id: 1, label:"Alegre", selected: true},
-        {id: 2, label:"Amigable", selected: false},
-        {id: 3, label:"Proactiva", selected: false},
-        {id: 4, label:"Puntual", selected: false},
-        {id: 5, label:"Conversadora", selected: false},
-    ])
+    const { user, setUser } = useContext(UtilitiesContext)
+
+    console.log(user)
 
     return (
         <SafeAreaView style={styles.main}>
@@ -39,12 +33,11 @@ const Perfil = ({navigation}) => {
                 </View>
                 <View style={{height:40}} />
                 <Text style={_styles.title}>Jefferson Hernandez</Text>
-                <Text style={_styles.p}>3012589632</Text>
-          
-  
+                <Text style={_styles.p}>{user.mobile}</Text>
+
                 <TouchItem
                     titulo="Info"
-                    image={user}
+                    image={usuario}
                     text="Completa tus datos para que tengas Nequi a tu medida."
                     onPress={() => {}}
                     progress={40}
@@ -54,7 +47,7 @@ const Perfil = ({navigation}) => {
                     titulo="Caracterización"
                     image={bandera}
                     text="Completa tus datos para que tengas Nequi a tu medida."
-                    onPress={() => {}}
+                    onPress={() => navigation.navigate("Caracterizacion")}
                 />
 
                 <TouchItem

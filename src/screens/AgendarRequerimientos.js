@@ -15,7 +15,12 @@ const itemsEspacios = [
     {id:2, label:"Carlos", value:2},
     {id:3, label:"Wilson", value:3},
 ]
-
+const itemsServicios = [
+    {id:0, label:"Seleccione...", value:"Seleccione..."},
+    {id:1, label:"Aseo Básico", value:1},
+    {id:2, label:"Planchado", value:2},
+    {id:3, label:"Otro", value:3},
+]
 
 const AgendarRequerimientos = ({navigation}) => {
 
@@ -38,7 +43,7 @@ const AgendarRequerimientos = ({navigation}) => {
                 <View style={{paddingHorizontal:20}}>
 
                     <Select label="Mis solicitudes guardadas" items={itemsEspacios} />
-                    <Select label="Tipo de Servicio" items={itemsEspacios} />
+                    <Select label="Tipo de Servicio" items={itemsServicios} />
                     
                     <View style={{height:10}} />
 
@@ -63,7 +68,7 @@ const AgendarRequerimientos = ({navigation}) => {
                         />
                         <Text style={[_styles.label, {flex: 1}]}>Guardar esta informacion para futuras solicitudes.</Text>
                     </View>
-                    {guardar && <Input label="Nombre del espacio" value={nombre} onChange={text => setNombre(text)} />}
+                    {guardar && <Input placeholder='Nombre de solicitud' label="" value={nombre} onChange={text => setNombre(text)} />}
                     <View style={{height:50}} />
                     <Button title="Solicitar" onPress={() => navigation.navigate("AgendarAsignacion")}/>
 

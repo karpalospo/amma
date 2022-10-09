@@ -24,7 +24,7 @@ const CrearCuenta = ({navigation}) => {
     const [celular, setCelular] = useState("")
     const [password, setPassword] = useState("")
 
-    const crearCuenta = ({navigation}) => {
+    const crearCuenta = () => {
         console.log(checked, tipoDocumento.value, numDocumento, email, celular, password)
 
         let res = true

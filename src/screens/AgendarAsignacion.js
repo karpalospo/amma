@@ -17,14 +17,12 @@ const AgendarAsignacion = ({navigation}) => {
 
             <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled" style={{padding:20, width:"100%"}}>
 
-
                 <Text style={_styles.title}>Solicitud Programada</Text>
-
 
                 <View style={{height:60}} />
                 <View style={styles.rowCenter}>
                     <View style={_styles.image}>
-                        <Image source={deco1} style={{width:"100%", height: 250, marginTop: -65, marginLeft: -10}} resizeMode="contain" />
+                        <Image source={deco1} style={{width:"100%", height: 210, marginTop: -55, marginLeft: -10}} resizeMode="contain" />
                         <Avatar />
                     </View>
                 </View>

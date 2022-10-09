@@ -22,7 +22,7 @@ const Stack = createStackNavigator()
 const AppStacks = () => {
     
     return (
-        <Stack.Navigator initialRouteName={"Blank"}>
+        <Stack.Navigator initialRouteName={"Home"}>
 
             <Stack.Screen name='Blank' component={Blank} options={{ headerShown:false }}/>
             <Stack.Screen name='Onboarding' component={Onboarding} options={{ headerShown:false }}/>
@@ -38,6 +38,7 @@ const AppStacks = () => {
             <Stack.Screen name='Calificar' component={Calificar} options={{ headerShown:false }}/>
             <Stack.Screen name='Detalles' component={Detalles} options={{ headerShown:false }}/>
             <Stack.Screen name='Caracterizacion' component={Caracterizacion} options={{ headerShown:false }}/>
+            <Stack.Screen name='Perfil' component={Perfil} options={{ headerShown:false }}/>
 
         </Stack.Navigator>
     )

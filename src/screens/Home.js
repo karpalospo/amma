@@ -49,7 +49,6 @@ const Home = ({navigation}) => {
             const res = await API.GET.MisSolicitudes(user.id)
             if(!res.error && res.message.result.length > 0) 
             setSolicitud(res.message.result[0])
-         
         })()
     }, [user])
 
@@ -85,7 +84,7 @@ const Home = ({navigation}) => {
                     <Text style={_styles.buttonMenuLabel}>Ayuda</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate("Perfil")}>
                     <Image source={Menuicon4} style={{height: 25, width: 35}} tintColor="#7EA8CA" resizeMode="contain" />
                     <Text style={_styles.buttonMenuLabel}>Perfil</Text>
                 </TouchableOpacity>
@@ -119,7 +118,7 @@ const Home = ({navigation}) => {
                     </View>
                     }
 
-                    {Object.keys(solicitud) > 0 && 
+                    {true && 
                     <TouchableOpacity style={[styles.row, {backgroundColor:"#FFF1D4", padding:15, borderRadius: 8, marginVertical: 10}]} activeOpacity={0.9} onPress={() => navigation.navigate("Detalles")}>
                         <Avatar size={65} position="relative" />
                         <View style={{flex:1, paddingLeft:10}}>
@@ -133,7 +132,7 @@ const Home = ({navigation}) => {
                     </TouchableOpacity>
                     }
 
-                    {caracterizacion && 
+                    {caracterizacion && false &&
                     <InfoCard 
                         title="Queremos asignarte al personal ideal"
                         text="Nuestro equipo de profesionales es  maravilloso, sin embargo nos guartaría enviarte a alguien con quien te sientas cómodo y te brinde un servicio más cercano."
@@ -144,7 +143,7 @@ const Home = ({navigation}) => {
                     }
 
 
-                    <View style={{width:"100%", position:"relative", height:200}}>
+                    <View style={{width:"100%", position:"relative", height:200, marginVertical:10}}>
                         <Image source={articulo1} style={{width: "100%", borderRadius: 20, position:"absolute"}} resizeMode="cover" />
                         <View style={{width:"100%", position:"absolute", zIndex: 2}}>
                             <Image source={articulo1} style={{width: "100%", opacity:0}} resizeMode="cover" />
