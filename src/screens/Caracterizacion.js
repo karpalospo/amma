@@ -30,12 +30,19 @@ const Caracterizacion = ({navigation}) => {
         (async function () {
             if(Object.keys(preguntas).length > 0) return
             const res = await API.GET.getPreguntas()
+            console.log(res)
             if(!res.error && res.message.result.length > 0) {
                 let p = {}
                 res.message.result.forEach(item => {
-                    if(!p[item.idQu]) p[item.idQu] = {title: item.question, resp: {}}
-                    else {
-                        if(!p[item.idQu].resp[item.idAns]) p[item.idQu].resp[item.idAns] = {title: item.respon, id: item.idAns}
+                    if(!p[item.idQue]) {
+
+                        let resp = []; //item.answers;
+                        p[item.idQue] = {title: item.question, resp: {}}
+                        Object.keys(item.answers).forEach(key => {
+                            let r = item.answers[key]
+                            p[item.idQue].resp[key] = {title: r.answer, id: r.id}
+                        })
+                        //if(!p[item.idQue].resp[item.idAns]) p[item.idQu].resp[item.idAns] = {title: item.respon, id: item.idAns}
                     }
                 })
 

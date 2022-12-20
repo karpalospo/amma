@@ -1,6 +1,25 @@
 import { StyleSheet, Platform, Dimensions } from "react-native"
 
 
+const _IMAGES = {
+    "email": require("../../assets/email.png"),
+    "manoarriba": require("../../assets/manoarriba.png"),
+    "manoabajo": require("../../assets/manoabajo.png"),
+    "numdocumento": require("../../assets/numdocumento.png"),
+    "tamano": require("../../assets/tamano.png"),
+    "tipodocumento": require("../../assets/tipodocumento.png"),
+    "tipopropiedad": require("../../assets/tipopropiedad.png"),
+    "ubicacion": require("../../assets/ubicacion.png"),
+    "usuario": require("../../assets/usuario.png"),
+    "candado": require("../../assets/candado.png"),
+    "celular": require("../../assets/celular.png"),
+    "corazon": require("../../assets/corazon.png"),
+}
+
+export const IMAGES = _IMAGES
+
+
+
 const _COLORS = {
     mainBlue: "#0090CC",
     red: "#E12D2D",
@@ -43,11 +62,10 @@ export const styles = StyleSheet.create({
     },
 
     inputs: {
+        flexDirection: "row",
+        alignItems: "center",
         backgroundColor: "#fff",
-        alignSelf: "stretch",
-        alignItems: "stretch",
-        paddingHorizontal: 5,
-        paddingLeft: 15,
+        paddingHorizontal: 12,
         margin:5,
         marginTop:0,
         borderRadius: 10,
@@ -65,7 +83,8 @@ export const styles = StyleSheet.create({
     textInputs: {
         height:"100%",
         borderWidth:0,
-        fontSize:16
+        fontSize:16,
+        flex: 1,
     },
 
     pickers: {

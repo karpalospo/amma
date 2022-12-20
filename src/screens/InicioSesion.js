@@ -19,17 +19,12 @@ const CrearCuenta = ({navigation}) => {
     const { setUser } = useContext(UtilitiesContext)
 
     const login = async () => {
-        console.log(numdoc, password)
-
         if(numdoc.trim() == "" || password.trim() == "") return Alert.alert("Servicios Amma", "Debe llenar todos los campos")
         setLoading(true)
         const res = await API.POST.login(numdoc, password)
         setLoading(false)
-
         if(!res.error) {
-
-            setUser({...res.message.user, logged: true})
-
+            setUser({...res.message, logged: true})
         } else {
             setPassword("")
             Alert.alert("Servicios Amma", "Usuario y/o Contraseña no válidos")
@@ -47,8 +42,8 @@ const CrearCuenta = ({navigation}) => {
                     <Text style={[styles.H1, {color: "#00A0BC", paddingLeft: 15, marginTop:20}]}>Inicio de Sesión</Text>
                     <View style={{height:45}}></View>
                     
-                    <Input label="Número de documento" type="numeric" value={numdoc} onChange={text => setNumDoc(text)} editable={!loading} />
-                    <Input label="Contraseña" value={password} onChange={text => setPassword(text)} secureTextEntry={true} editable={!loading}  />
+                    <Input img="usuario" label="Número de documento" type="numeric" value={numdoc} onChange={text => setNumDoc(text)} editable={!loading} />
+                    <Input img="candado" label="Contraseña" value={password} onChange={text => setPassword(text)} secureTextEntry={true} editable={!loading}  />
 
                     <View style={{height:20}}></View>
                     <TouchableOpacity onPress={() => navigation.navigate("OlvidoContrasena")} >

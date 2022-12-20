@@ -10,11 +10,12 @@ const InfoCard = ({
     text,
     onCallToAction,
     CallToActionTitle,
-    onClose
+    onClose,
+    color = "#C7F0F9"
 }) => {
 
     return (
-        <View style={{backgroundColor: "#C7F0F9", borderRadius:15, padding:20, marginVertical: 30}}>
+        <View style={{backgroundColor: color, borderRadius:15, padding:15, marginVertical: 10}}>
             <View style={[styles.row, {alignItems:"flex-start"}]} >
                 <Text style={[styles.H3, {color: "#00A0BC", paddingRight: 30, marginBottom:8}]}>{title}</Text>
                 {onClose && 

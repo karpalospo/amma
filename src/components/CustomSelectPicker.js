@@ -12,6 +12,7 @@ export const CustomSelectPicker = ({
     textStyle = {}, 
     customLabelKey = 'label', // overwrites the default selected item label key, default `label`  
     placeHolder,
+    value,
     InitialselectedItem
 }) => {
 

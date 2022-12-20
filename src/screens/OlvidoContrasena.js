@@ -46,6 +46,7 @@ const OlvidoContrasena = ({navigation}) => {
                     {!enviado && 
                     <View>
                         <Input 
+                            img="email"
                             label="Correo electrónico" 
                             type="email-address" 
                             value={correo} 

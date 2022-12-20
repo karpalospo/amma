@@ -15,6 +15,7 @@ import _InfoCard from "./InfoCard";
 import _Avatar from "./Avatar";
 import _TouchItem from "./TouchItem";
 import _TouchItem2 from "./TouchItem2";
+import _Solicitud from "./Solicitud";
 
 export const Button = _Button;
 export const Card = _Card;
@@ -33,4 +34,5 @@ export const InfoCard = _InfoCard;
 export const Avatar = _Avatar;
 export const TouchItem = _TouchItem;
 export const TouchItem2 = _TouchItem2;
+export const Solicitud = _Solicitud;
 

@@ -4,7 +4,6 @@ import { styles, COLORS } from '../global/styles'
 import {Button, Header, Avatar} from '../components'
 
 
-
 const deco1 = require("../../assets/deco1.png")
 
 
@@ -26,21 +25,12 @@ const AgendarAsignacion = ({navigation}) => {
                         <Avatar />
                     </View>
                 </View>
-                <View style={{height:20}} />
-                <Text style={_styles.title}>Liliana Martinez</Text>
+                <View style={{height:40}} />
+
                 <Text style={_styles.p}>Pronto un representante de Amma se pondrá en contacto contigo por email o teléfono para verificar y aprobar tu solicitud.</Text>
                 <View style={{height:20}} />
                 <View style={styles.rowCenter}>
-                    <View style={{width: 180}}>
-                        <View style={styles.row}>
-                            <Text style={_styles.label}>Edad</Text>
-                            <Text style={_styles.text}>34 Años</Text>
-                        </View>
-                        <View style={styles.row}>
-                            <Text style={_styles.label}>Ciudad</Text>
-                            <Text style={_styles.text}>Barranquilla</Text>
-                        </View>
-                    </View>
+                    <View style={{width: 180}}></View>
                 </View>
 
                 <View style={{height:30}} />

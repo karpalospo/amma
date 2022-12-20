@@ -3,7 +3,7 @@ import { View, TouchableOpacity, StyleSheet, Text, TextInput} from 'react-native
 import { styles, COLORS } from '../global/styles'
 import { AntDesign } from '@expo/vector-icons'; 
 
-export default ({onChange = () => {}, value = "0", label = ""}) => {
+export default ({onChange = () => {}, value = "0", label = "", id}) => {
 
     const [_value, setValue] = useState(value);
 
@@ -13,7 +13,7 @@ export default ({onChange = () => {}, value = "0", label = ""}) => {
         if(val < 0) val = 0
         if(val > 99) val = 99
         setValue(String(val))
-        onChange({label, value: val})
+        onChange(id, val)
     }
 
     return (

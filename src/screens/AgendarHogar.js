@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef, useContext } from 'react'
-import { View, SafeAreaView, Text, ScrollView, StyleSheet, Image, Switch } from 'react-native'
+import { View, SafeAreaView, Text, ScrollView, StyleSheet, Image, Switch, Alert } from 'react-native'
 import { styles, COLORS } from '../global/styles'
 import {Button, Jornada, Header} from '../components'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 import {Calendar, LocaleConfig} from 'react-native-calendars';
 import moment from 'moment-business-days';
 
@@ -25,16 +24,10 @@ moment.updateLocale('es-us', {
     workingWeekdays: [1, 2, 3, 4, 5, 6]
 });
 
-const jornadas = [
-    {label: "Mañana", value:"mañana", label2:"6 am a 12 pm"},
-    {label: "Tarde", value:"tarde", label2:"1 pm a 6 pm"},
-    {label: "Completa", value:"completa", label2:"6 am a 6 pm"},
-]
 const repeticiones = [
     {label:"Semanal", value:"semanal"}, 
     {label:"Mensual", value:"mensual"}
 ]
-
 
 const dayStyle = {
     selected: true,
@@ -49,11 +42,14 @@ const dayStyle = {
     }
 }
 
+let data = {}
 
+const AgendarHogar = ({navigation, route}) => {
 
-const AgendarHogar = ({navigation}) => {
+    data = route.params.data;
 
-    let esteDia = moment().businessAdd(0), maxDay, minDay
+ 
+    let esteDia = moment(), maxDay, minDay
     minDay = esteDia.format("YYYY-MM-DD")
     maxDay = moment().businessAdd(60).format("YYYY-MM-DD")
 
@@ -63,6 +59,21 @@ const AgendarHogar = ({navigation}) => {
     const [meses, setMeses] = useState("12");
     const [selected, setSelected] = useState({});
 
+    const next = () => {
+        let dias = []
+        Object.keys(selected).forEach(key => {
+            dias.push({date: key})
+        })
+
+        data.jornada = jornada
+        data.programa = dias
+
+        if(Object.keys(selected).length == 0) {
+            return Alert.alert("Servicios AMMA", "Seleccione por lo menos un día")
+        }
+        navigation.navigate("AgendarMapa", {data})
+    }
+
     return (
         <SafeAreaView style={styles.main}>
             
@@ -70,17 +81,12 @@ const AgendarHogar = ({navigation}) => {
 
             <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled" style={{padding:20, width:"100%"}}>
 
-                <Text style={{color:"#00A0BC", fontSize: 16, fontFamily:"pp_regular", paddingLeft:20}}>Elige cuales días necesitas el servicio</Text>
+                <Text style={{color:"#00A0BC", textAlign: "center", fontSize: 16, fontFamily:"pp_regular"}}>Selecciona la agenda de tu servicio</Text>
 
                 <Calendar 
                     horizontal={true}
                     style={{
-                        borderRadius: 12,
-                        margin:20,
-                        marginTop: 0,
-                        paddingBottom:20,
-                        paddingLeft: 20,
-                        paddingRight: 20,
+                        paddingBottom:10,
                     }}
                     minDate={minDay}
                     maxDate={maxDay}
@@ -99,10 +105,8 @@ const AgendarHogar = ({navigation}) => {
                                 for(let i = 1; i < meses - 1; i++)
                                     d[moment(day).add(i, 'M').format("YYYY-MM-DD")] = {...dayStyle}
                             }
-     
                         }
                         setSelected(d)
-                        
                     }}
                     theme={{
                         backgroundColor: '#F8FCFF',
@@ -128,7 +132,7 @@ const AgendarHogar = ({navigation}) => {
                     }}
                 />
 
-                <View style={[styles.rowCenter]}>
+                {/*<View style={[styles.rowCenter]}>
                     <Text style={{fontSize: 17, fontFamily:"pp_regular", color:"#00A0BC", paddingRight:4}}>Repetir</Text>
                     <Switch
                         trackColor={{ false: "#888", true: "#00adf5" }}
@@ -136,17 +140,17 @@ const AgendarHogar = ({navigation}) => {
                         ios_backgroundColor="#3e3e3e"
                         onValueChange={value => setSwitche(value)}
                         value={switche}
-                    />
-                </View>
+                />
+                </View>*/}
+
                 {switche && <Jornada items={repeticiones} justify="center" numMeses={meses} changeMeses={text => setMeses(text)} onChange={value => setRepeticion(value)} />}
-                <View style={{height:30}}></View>
-                <Text style={{fontSize: 16, fontFamily:"pp_regular", color:"#00A0BC", paddingRight:4}}>Jornada que deseas</Text>
+                <Text style={{fontSize: 16, textAlign:"center", fontFamily:"pp_regular", color:"#00A0BC", paddingTop:15}}>Jornada que deseas</Text>
                 <View style={{height:10}}></View>
-                <Jornada items={jornadas} onChange={value => setJornada(value)} />
+                <Jornada items={data.jornadas} onChange={value => setJornada(value)} />
 
                 <View style={{height:50}}></View>
 
-                <Button title="Continuar" onPress={() => navigation.navigate("AgendarMapa")} />
+                <Button title="Continuar" onPress={() => next()} />
                     
                 <View style={{height:50}}></View>
             </ScrollView>

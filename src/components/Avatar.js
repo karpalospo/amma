@@ -1,21 +1,21 @@
 import React from 'react';
 import { Image} from 'react-native';
 
-const mujer = require("../../assets/mujer.png")
-const hombre = require("../../assets/hombre.png")
+const user = require("../../assets/user.png")
 
-const Avatar = ({size=120, position="absolute", photo="mujer"}) => {
+const Avatar = ({size=120, position="absolute"}) => {
 
     return (
         <Image 
-            source={photo == "mujer" ? mujer : hombre} 
+            source={user} 
             style={{
+                backgroundColor:"white",
                 width:size, 
                 height: size, 
                 position, 
                 top: 0, 
                 left: position == "absolute" ? "50%" : 0, 
-                marginLeft: position == "absolute" ? -60 : 0, 
+                marginLeft: position == "absolute" ? size / -2 : 0, 
                 borderRadius:60, 
                 borderWidth: 3, 
                 borderColor:"#00A0BC"}} 

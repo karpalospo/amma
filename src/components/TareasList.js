@@ -7,47 +7,36 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import moment from 'moment/min/moment-with-locales';
+moment.locale('es-us');
 
+const TareasList = ({item, callback}) => {
 
-
-const TareasList = ({tareas, editTarea, callback}) => {
-
-    chulearTarea = async (id, payload, item) => {
-        await editTarea(id, payload)
-        if(typeof callback == "function") callback(item)
-    }
-
+    //console.log("repinto")
     return (
-        <View>
-            {tareas.map(item => 
-                <TouchableOpacity
-                    style={styles.row}
-                    activeOpacity={0.6}
-                    key={item.id} 
-                    onPress={ () => chulearTarea(item.date, {completed: !item.completed}, item)}>   
-                    <Text style={{color: (item.completed ? "#A2BD30" : "#ccc"), paddingRight:15}}>
-                        <Ionicons name="md-checkmark-circle" size={24} />
-                    </Text>
-                    <View flex={1}>
-                        <View><Text style={styles.text}>{item.text}</Text></View>
-                        <View><Text style={styles.date}>{moment(item.date).fromNow()}</Text></View>
-                    </View> 
-                </TouchableOpacity>
-            )}
-        </View>
+        <TouchableOpacity
+            style={styles.row}
+            activeOpacity={0.6}
+            onPress={ () => callback(item)}
+        >   
+            <Text style={{color: (item.completed ? "#0097B1" : "#ccc"), paddingRight:15}}>
+                <Ionicons name="md-checkmark-circle" size={24} />
+            </Text>
+            <View flex={1}>
+                <View><Text style={styles.text}>{item.text}</Text></View>
+                {item.date && <View><Text style={styles.date}>{moment(item.date).fromNow()}</Text></View>}
+            </View> 
+        </TouchableOpacity>
     )
 
 }
 
-
 export default TareasList
 
-
-const styles = StyleSheet.create({
+const styles = {
 
     date: {
-        fontSize: 12,
-        color: "#ccc"
+        fontSize: 13,
+        color: "#999"
     },
 
     text: {
@@ -69,5 +58,5 @@ const styles = StyleSheet.create({
         borderColor: "#000",
         borderWidth:1,
     }
-});
+}
 

@@ -3,6 +3,7 @@ import { View, SafeAreaView, Text, StatusBar, ScrollView, Image, Alert } from 'r
 import { styles, COLORS } from '../global/styles'
 import {Button, Input, Select} from '../components'
 import BouncyCheckbox from "react-native-bouncy-checkbox";
+import { API } from '../global/services'
 
 const itemsTipoDocumento = [
     {id:0, label:"Seleccione...", value:"Seleccione..."},
@@ -24,12 +25,19 @@ const CrearCuenta = ({navigation}) => {
     const [celular, setCelular] = useState("")
     const [password, setPassword] = useState("")
 
-    const crearCuenta = () => {
-        console.log(checked, tipoDocumento.value, numDocumento, email, celular, password)
+    const crearCuenta = async () => {
 
-        let res = true
+        let res = await API.POST.signup({
+            tipDoc: tipoDocumento.value.toString(),	
+            username: numDocumento,
+            names: nombres.trim(),
+            surnames: apellidos.trim(),
+            email: email.trim(),
+            password: password.trim(),
+            mobile: celular.trim()
+        })
 
-        if(res) {
+        if(res.error) {
             Alert.alert("Servicios Amma", "Su cuenta se ha creado satisfactoriamente.")
             navigation.navigate("InicioSesion")
         } else {
@@ -51,8 +59,8 @@ const CrearCuenta = ({navigation}) => {
 
                     <Input label="Número de documento" type="decimal-pad" value={numDocumento} onChange={text => setNumDocumento(text)} />
                     <Input label="Email" type="email-address" value={email} onChange={text => setEmail(text)} />
-                    <Input label="Nombres" value={nombres} onChange={text => setEmail(setNombres)} />
-                    <Input label="Apellidos" value={apellidos} onChange={text => setEmail(setApellidos)} />
+                    <Input label="Nombres" value={nombres} onChange={text => setNombres(text)} />
+                    <Input label="Apellidos" value={apellidos} onChange={text => setApellidos(text)} />
                     <Input label="Número de Celular" type="phone-pad" value={celular} onChange={text => setCelular(text)} />
                     <Input label="Contraseña" value={password} onChange={text => setPassword(text)} secureTextEntry={true} />
 

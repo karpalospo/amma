@@ -13,7 +13,7 @@ const TextArea = ({label, customStyle ={}, numLines=4, height=110, value, onChan
                     numberOfLines={numLines}
                     placeholder={placeholder}
                     keyboardType={type}
-                    style={[styles.textInputs, {height: "100%", textAlignVertical: 'top'}]}
+                    style={[styles.textInputs, {height: "100%", textAlignVertical: 'top', flex:1}]}
                     onChangeText={text => onChange(text)}
                     value={value}
                 />

@@ -10,6 +10,8 @@ const Provider = ({ children }) => {
     const [location, setLocationState] = useState({})
     const [loading, setLoading] = useState(false)
 
+    const [tareas, setTareas2] = useState({})
+
     const [user, setUserState] = useState({})
     const [cart, setCart] = useState([])
     const [login, setLogin] = useState(async () => {
@@ -23,6 +25,8 @@ const Provider = ({ children }) => {
             if(_location) setLocationState(JSON.parse(_location))
             let _cart = await AsyncStorage.getItem('cart')
             if(_cart) setCart(JSON.parse(_cart))
+            let _tareas = await AsyncStorage.getItem('tareas')
+            if(_tareas) setTareas2(JSON.parse(_tareas))
 
             setLoading(false)
 
@@ -32,6 +36,7 @@ const Provider = ({ children }) => {
     })
 
     const setUser = (user) => {
+        console.log("-->", user)
         setUserState(user)
         AsyncStorage.setItem('user',JSON.stringify(user));  
     }
@@ -41,10 +46,20 @@ const Provider = ({ children }) => {
         AsyncStorage.setItem('cart', JSON.stringify([items, ...cart]));
     }
 
+    const setTareas = (items) => {
+        setTareas2({...tareas, ...items})
+        AsyncStorage.setItem('tareas', JSON.stringify({...tareas, ...items}));
+    }
+    
     const clearCartItems = () => {
         setCart([])
         AsyncStorage.setItem('cart', JSON.stringify([]));
     }
+    const clearTareas = () => {
+        setTareas2({})
+        AsyncStorage.setItem('tareas', JSON.stringify({}));
+    }
+    
 
     const value = {
         loading,
@@ -52,7 +67,10 @@ const Provider = ({ children }) => {
         setUser,
         user,
         cart,
+        tareas,
+        setTareas,
         setCartItems,
+        clearTareas,
         clearCartItems
     }
 

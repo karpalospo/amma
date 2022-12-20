@@ -32,8 +32,8 @@ export default TouchItem
 
 const _styles = {
     item: {
-        marginVertical: 8,
-        backgroundColor:"white", 
+        marginVertical: 2,
+        backgroundColor:"transparent", 
         padding:8,
     },
     item2: {

@@ -15,14 +15,17 @@ import Blank from '../screens/Blank'
 import Calificar from '../screens/Calificar'
 import Detalles from '../screens/Detalles'
 import Perfil from '../screens/Perfil'
+import EditarPerfil from '../screens/EditarPerfil'
 import Caracterizacion from '../screens/Caracterizacion'
+import Historial from '../screens/Historial'
+import Ayuda from '../screens/Ayuda'
 
 const Stack = createStackNavigator()
 
 const AppStacks = () => {
     
     return (
-        <Stack.Navigator initialRouteName={"Home"}>
+        <Stack.Navigator initialRouteName={"Blank"}>
 
             <Stack.Screen name='Blank' component={Blank} options={{ headerShown:false }}/>
             <Stack.Screen name='Onboarding' component={Onboarding} options={{ headerShown:false }}/>
@@ -39,6 +42,9 @@ const AppStacks = () => {
             <Stack.Screen name='Detalles' component={Detalles} options={{ headerShown:false }}/>
             <Stack.Screen name='Caracterizacion' component={Caracterizacion} options={{ headerShown:false }}/>
             <Stack.Screen name='Perfil' component={Perfil} options={{ headerShown:false }}/>
+            <Stack.Screen name='EditarPerfil' component={EditarPerfil} options={{ headerShown:false }}/>
+            <Stack.Screen name='Historial' component={Historial} options={{ headerShown:false }}/>
+            <Stack.Screen name='Ayuda' component={Ayuda} options={{ headerShown:false }}/>
 
         </Stack.Navigator>
     )

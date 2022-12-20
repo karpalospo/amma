@@ -9,13 +9,9 @@ const usuario = require("../../assets/icon_user.png")
 const bandera = require("../../assets/icon_bandera.png")
 const cerrar = require("../../assets/icon_cerrar.png")
 
-
-
 const Perfil = ({navigation}) => {
 
     const { user, setUser } = useContext(UtilitiesContext)
-
-    console.log(user)
 
     return (
         <SafeAreaView style={styles.main}>
@@ -32,21 +28,19 @@ const Perfil = ({navigation}) => {
                     </View>
                 </View>
                 <View style={{height:40}} />
-                <Text style={_styles.title}>Jefferson Hernandez</Text>
-                <Text style={_styles.p}>{user.mobile}</Text>
+                <Text style={_styles.title}>{user.names + " " + user.surnames}</Text>
 
                 <TouchItem
                     titulo="Info"
                     image={usuario}
-                    text="Completa tus datos para que tengas Nequi a tu medida."
-                    onPress={() => {}}
-                    progress={40}
+                    text="Mantén actualizados tus datos de contacto para mejor atención."
+                    onPress={() => navigation.navigate("EditarPerfil")}
                 />
 
                 <TouchItem
                     titulo="Caracterización"
                     image={bandera}
-                    text="Completa tus datos para que tengas Nequi a tu medida."
+                    text=" Permitenos conocerte mejor para asignarte al personal ideal."
                     onPress={() => navigation.navigate("Caracterizacion")}
                 />
 
@@ -54,7 +48,7 @@ const Perfil = ({navigation}) => {
                     titulo="Cerrar Sesión"
                     image={cerrar}
                     text="Esperamos que sea un solo hasta pronto."
-                    onPress={() => {}}
+                    onPress={() => setUser({})}
                 />
 
             </ScrollView>

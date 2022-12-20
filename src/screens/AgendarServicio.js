@@ -3,17 +3,46 @@ import { View, SafeAreaView, Text, StatusBar, ScrollView, StyleSheet, Image } fr
 import { styles, COLORS } from '../global/styles'
 import {Header} from '../components'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-
+import { API } from '../global/services';
 
 const aseo = require("../../assets/img1.png")
-const fumigacion = require("../../assets/img2.png")
-const arreglos = require("../../assets/img3.png")
 const hogar = require("../../assets/hogar.png")
-const empresa = require("../../assets/empresa.png")
 
-const Agendar = ({navigation}) => {
+let data = {}
 
-    const [menu1, setMenu] = useState(false)
+const Agendar = ({navigation, route}) => {
+
+    const {jornadas, user} = route.params
+    
+
+    const [menu, setMenu] = useState(null)
+    const [tipos, setTipos] = useState(null);
+    const [clases, setClases] = useState(null);
+
+    useEffect(() => {
+        (async () => {
+        if(tipos == null) {
+            const res = await API.GET.getTipoServicio()
+            if(!res.error) setTipos(res.message.result)
+        }})()
+    }, [tipos])
+
+    useEffect(() => {
+        (async () => {
+        if(clases == null) {
+            const res = await API.GET.getClaseServicio()
+            if(!res.error) setClases(res.message.result)
+        }})()
+    }, [clases])
+
+    const next = (id) => {
+        data.jornadas = jornadas
+        data.usuario_id = user.id
+        data.idTser = menu
+        data.idClas = id
+        navigation.navigate("AgendarHogar", {data})
+    }
+
 
     return (
         <SafeAreaView style={styles.main}>
@@ -22,37 +51,20 @@ const Agendar = ({navigation}) => {
     
                 <Text style={{paddingVertical:35, color:"#00A0BC", fontSize: 17, paddingLeft:20}}>Elige el tipo de servicio que necesitas</Text>
 
-                {!menu1 && 
-                <View>
-                    <TouchableOpacity onPress={() => setMenu(1)} style={[styles.rowLeft, _styles.item]}>
+                {menu == null && tipos && tipos.map(item => 
+                    <TouchableOpacity key={item.id} onPress={() => setMenu(item.id)} style={[styles.rowLeft, _styles.item, {backgroundColor: "#0056BC"}]}>
                         <Image source={hogar} style={_styles.image} resizeMode="contain" />
-                        <Text style={_styles.itemText}>HOGAR</Text>
+                        <Text style={_styles.itemText}>{item.name}</Text>
                     </TouchableOpacity>
-                    <View style={{height:20}} />
-                    <TouchableOpacity onPress={() => setMenu(2)} style={[styles.rowLeft, _styles.item, {backgroundColor: "#0056BC"}]}>
-                        <Image source={empresa} style={_styles.image} resizeMode="contain" />
-                        <Text style={_styles.itemText}>EMPRESA</Text>
-                    </TouchableOpacity>
-                </View>
+                    )
                 }
 
-                {menu1 && 
-                <View>
-                    <TouchableOpacity onPress={() => navigation.navigate("AgendarHogar")} style={[styles.rowLeft, _styles.item]}>
+                {menu != null && clases && clases.map(item => 
+                    <TouchableOpacity key={item.id} onPress={() => next(item.id)} style={[styles.rowLeft, _styles.item]}>
                         <Image source={aseo} style={_styles.image} resizeMode="contain" />
-                        <Text style={_styles.itemText}>ASEO</Text>
+                        <Text style={_styles.itemText}>{item.name}</Text>
                     </TouchableOpacity>
-                    <View style={{height:20}} />
-                    <TouchableOpacity onPress={() => navigation.navigate("AgendarHogar")} style={[styles.rowLeft, _styles.item, {backgroundColor: "#00BCBC"}]}>
-                        <Image source={fumigacion} style={_styles.image} resizeMode="contain" />
-                        <Text style={_styles.itemText}>FUMIGACIÓN</Text>
-                    </TouchableOpacity>
-                    <View style={{height:20}} />
-                    <TouchableOpacity onPress={() => navigation.navigate("AgendarHogar")} style={[styles.rowLeft, _styles.item, {backgroundColor: "#0056BC"}]}>
-                        <Image source={arreglos} style={_styles.image} resizeMode="contain" />
-                        <Text style={_styles.itemText}>ARREGLOS</Text>
-                    </TouchableOpacity>
-                </View>
+                    )
                 }
 
             </ScrollView>
@@ -68,7 +80,8 @@ const _styles = {
         paddingLeft:20,
         backgroundColor: "#00A0BC",
         borderRadius: 10,
-        paddingVertical:15
+        paddingVertical:15,
+        marginVertical: 10
     },
 
     itemText: {

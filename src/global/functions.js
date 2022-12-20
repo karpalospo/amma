@@ -1,4 +1,4 @@
-import { API } from '../global/services'
+
 
 export const shortName = (data) => {
     let ret = data.nombres + " " + data.apellidos

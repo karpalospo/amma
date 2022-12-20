@@ -2,27 +2,19 @@ import React, {useState} from 'react';
 import { View, TouchableOpacity, Text, TextInput} from 'react-native';
 import { styles } from '../global/styles'
 
-const Jornada = ({items=[], onChange = () => {}, justify="space-between", numMeses, changeMeses = () => {}}) => {
+const Jornada = ({items=[], onChange = () => {}, justify="space-between"}) => {
 
     const [currentindex, setIndex] = useState(-1);
 
     return (
-        <View style={[styles.row, {justifyContent: justify}]}>
+        <View style={[styles.row, {flexDirection: "column", justifyContent: justify}]}>
             {
                 items.map((item, index) =>
-                    <TouchableOpacity key={index} activeOpacity={0.9} onPress={() => {onChange(item.value); setIndex(index)}} style={{marginHorizontal: 8}} >
-                        <Text style={[_styles.option, currentindex == index ? _styles.optionActive : {}]}>{item.label}</Text>
-                        {item.label2 && <Text style={_styles.optionText}>{item.label2}</Text>}
+                    <TouchableOpacity key={index} activeOpacity={0.9} onPress={() => {onChange(item.id); setIndex(index)}} style={{marginHorizontal: 8, marginVertical:12}} >
+                        <Text style={[_styles.option, currentindex == index ? _styles.optionActive : {}]}>{item.name}</Text>
+                        {item.jor && <Text style={_styles.optionText}>{item.jor}</Text>}
                     </TouchableOpacity>
                 )
-            }
-            {numMeses && 
-                <TextInput
-                style={{marginLeft:10, color:"#01BFE0", backgroundColor: "white", borderColor: "#B4E3F1", borderWidth: 1, borderRadius: 8, height:45, paddingHorizontal:5, textAlign:"center"}}
-                    onChangeText={text => changeMeses(text)}
-                    keyboardType="decimal-pad"
-                    value={numMeses}
-                />
             }
         </View>
     )

@@ -1,36 +1,85 @@
 import React, { useState, useEffect, useRef, useContext } from 'react'
-import { View, SafeAreaView, Text, StatusBar, ScrollView, StyleSheet, Image, Dimensions, TextInput } from 'react-native'
+import { View, SafeAreaView, Text, StatusBar, ScrollView, StyleSheet, Image, Dimensions, TextInput, Alert } from 'react-native'
 import { styles, COLORS } from '../global/styles'
 import { Input, Select, TextArea, Button, Header} from '../components'
-import { TouchableOpacity } from 'react-native-gesture-handler'
-
+import moment from 'moment-business-days';
+import { API } from '../global/services';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-
 
 const {width, height} = Dimensions.get('window')
 
 const itemsEspacios = [
-    {id:0, label:"Seleccione...", value:"Seleccione..."},
+    {id:0, label:"Seleccione...", value:0},
     {id:1, label:"Javi", value:1},
     {id:2, label:"Carlos", value:2},
     {id:3, label:"Wilson", value:3},
 ]
-const itemsServicios = [
-    {id:0, label:"Seleccione...", value:"Seleccione..."},
-    {id:1, label:"Aseo Básico", value:1},
-    {id:2, label:"Planchado", value:2},
-    {id:3, label:"Otro", value:3},
-]
 
-const AgendarRequerimientos = ({navigation}) => {
+let data = {}
+
+const AgendarRequerimientos = ({navigation, route}) => {
+
+    data = route.params.data;
+    if(!data.room) data.room = []
+
 
     const [guardar, setGuardarChecked] = useState(false)
-
-    const [servicios, setServicios] = useState("")
     const [especificaciones, setEspecificaciones] = useState("")
     const [especiales, setEspeciales] = useState("")
     const [nombre, setNombre] = useState("")
+    const [tipo_servicios, setTipo_servicios] = useState(null)
+    const [tipoServ, setTipoServ] = useState(null)
 
+
+    useEffect(() => {
+        (async () => {
+        if(tipo_servicios == null) {
+            const res = await API.GET.getAlcanceServicio()
+            if(!res.error) setTipo_servicios(res.message.result)
+        }})()
+    }, [tipo_servicios])
+
+    const next = async () => {
+
+        const res = await API.POST.setSolicitud(
+            {
+                "idTser": data.idTser, //Tipo de servicio ( hogar, oficina, )
+                "idClas": data.idClas, //Clase  ( aseo, fumigacion, etc)
+                "idAlc": tipoServ.value, //Alcance ( Aseo basico , ect )
+                "idJor": data.jornada, //Jornada ( 1: mañana, 2: tarde, 3: completa )
+                "idUsu": data.usuario_id, //Usuario del sistema
+                "state": 0, 
+                "location": data.address, // direccion 	
+                "date": moment().format("YYYY-MM-DD"), // Fecha del documento 
+                "coment": " ", // 
+                "specs": especificaciones, // Especificaciones del servicio
+                "orientation": especiales,	
+                "geo": "1111111, 22222222",	// Geoposecionamiento 
+                "programa": data.programa,  
+                "propiedad": [
+                    { 
+                        "idUsu" : data.usuario_id,
+                        "name": data?.espacioNombre || "NO", 
+                        "direction" : data.address,		
+                        "idSize" : data.tamano,
+                        "tipo" : data.tipo,
+                        "espacios": Object.keys(data.room).map(key => ({idSpace: key, space: data.room[key]})),
+                        "others": data?.otros || " ",
+                        "kids": data?.habitan?.ninos ? true : false,	
+                        "seniors": data?.habitan?.mayores ? true : false,	
+                        "pets": data?.habitan?.mascotas ? true : false,
+                        "special": data?.habitan?.especiales ? true : false				 
+                    }
+                ]
+            }
+        )
+        console.log(res)
+        if(res.message.statusCode < 400) navigation.navigate("AgendarAsignacion")
+        else {
+            Alert.alert("Hubo un error al guardar la solicitud. Intente nuevamente")
+        }
+        
+    }
 
     return (
         <SafeAreaView style={styles.main}>
@@ -42,8 +91,8 @@ const AgendarRequerimientos = ({navigation}) => {
  
                 <View style={{paddingHorizontal:20}}>
 
-                    <Select label="Mis solicitudes guardadas" items={itemsEspacios} />
-                    <Select label="Tipo de Servicio" items={itemsServicios} />
+                    <Select img="corazon" label="Mis solicitudes guardadas" items={itemsEspacios} />
+                    {tipo_servicios && <Select img="ubicacion" label="Tipo de Servicio" items={tipo_servicios.map(item => ({id: item.id, label: item.name, value: item.id}))}  onChange={value => setTipoServ(value)} />}
                     
                     <View style={{height:10}} />
 
@@ -70,7 +119,7 @@ const AgendarRequerimientos = ({navigation}) => {
                     </View>
                     {guardar && <Input placeholder='Nombre de solicitud' label="" value={nombre} onChange={text => setNombre(text)} />}
                     <View style={{height:50}} />
-                    <Button title="Solicitar" onPress={() => navigation.navigate("AgendarAsignacion")}/>
+                    <Button title="Solicitar" onPress={() => next()}/>
 
                     <View style={{height:30}} />
 
@@ -107,13 +156,16 @@ const _styles = StyleSheet.create({
 
     textDark: {
         backgroundColor: "#00A0BC", 
-        paddingVertical: 15, 
-        paddingHorizontal: 20, 
+        paddingVertical: 10, 
+        paddingHorizontal: 15, 
         color:"white",
-        borderRadius: 15,
+        borderRadius: 8,
         marginTop: 30,
         marginHorizontal: 5,
-        fontFamily: "pp_regular"
+        fontFamily: "pp_regular",
+        fontSize:14,
+        borderColor: "#009AAB",
+        borderWidth: 1
     }
  
 
