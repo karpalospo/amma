@@ -26,7 +26,8 @@ const TareasCard = ({
     infoTareas = {total:1, completed: 0}, 
     tareas = {},
     cb_click,
-    cb_save
+    cb_save,
+    hands
 }) => {
 
     const [edit, setEdit] = useState(false)
@@ -47,8 +48,8 @@ const TareasCard = ({
         setEdit(false)
     }
 
-    const cb = (item) => {
-        if(cb_click) return cb_click(item)
+    const cb = (item, action) => {
+        if(cb_click) return cb_click(item, action)
         let t = {...tareas}
         t[item.id].completed = !tareas[item.id].completed
         setTareas(t)
@@ -77,7 +78,7 @@ const TareasCard = ({
                 {infoTareas.total > 0 && <ProgressBar color="#0097B1" progress={infoTareas.completed / infoTareas.total * 100} />}
                 {infoTareas.total == 0 && <Text style={{textAlign:"center", fontSize:17, color: "#999"}}>Agrege una tarea</Text>}
                 <View style={{height:20}} />
-                {arrayfy(tareas).map(item => <TareasList key={String(item.id)} item={item} callback={item => cb(item)}/>)}
+                {arrayfy(tareas).map(item => <TareasList hands={hands} key={String(item.id)} item={item} callback={(item, action) => cb(item, action)}/>)}
             </PadView>
 
             <PadView padding="15">

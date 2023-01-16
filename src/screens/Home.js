@@ -89,16 +89,18 @@ const Home = ({navigation}) => {
                 "date": item.formatdate
             }
         )
-
-        if(!res.error) {
+        console.log(res)
+        if(res.message.statusCode < 202) {
             getLabores()
         } else {
             Alert.alert("Servicios AMMA", "Hubo un error al guardar la tarea")
         }
     }
 
-    const clickTarea = async (item) => {
-        const res = await API.POST.setLabor(item.id, item.completed ? 0 : 1)
+    const clickTarea = async (item, action) => {
+        let res
+        if(action == undefined) res = await API.POST.setLabor(item.id, item.completed ? 0 : 1)
+        else res = await API.POST.setLabor(item.id, action)
         getLabores()
     }
 
@@ -200,7 +202,8 @@ const Home = ({navigation}) => {
                         navigation={navigation} 
                         cb_save={guardarTarea}
                         cb_click={clickTarea}
-                        tareas={solicitudTareas.map(item => ({id:item.idChek, date:null, text:item.list, completed: item.value == 1}))}
+                        tareas={solicitudTareas.map(item => ({id:item.idChek, date:null, text:item.list, completed: item.value}))}
+                        hands={true}
                     />
                     }
                     <View style={{height:50}} />

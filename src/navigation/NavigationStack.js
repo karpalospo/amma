@@ -2,32 +2,24 @@ import React, { useContext, useEffect, useState} from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { View, ActivityIndicator, SafeAreaView } from 'react-native'
 
+import LoginStacks from './LoginStacks'
 import AppStacks from './AppStacks'
 import { styles, COLORS } from '../global/styles'
 
-
-
+import { UtilitiesContext } from '../context/UtilitiesContext'
 
 const NavigationStack = () => {
      
-    //const { isAuth, loading, getAuth, setAuth} = useContext(AuthContext)
+    const { user, loading } = useContext(UtilitiesContext)
     //const [user, setUser] = useState(false);
 
 
-    /*useEffect(() => {
-        if(user) return
-        (async function () {
-            setUser(await getAuth())
-        })()
-    });*/
-
-    const isAuth = true;
-    const loading = false;
-
+    console.log(user)
     return (
         <NavigationContainer>
  
-            {loading ? 
+            {
+                loading ? 
 
                 <SafeAreaView style={styles.main}>
 
@@ -38,11 +30,8 @@ const NavigationStack = () => {
 
                 </SafeAreaView >
 
-            : 
-            isAuth === false ? 
-                <View />
-                : 
-                <AppStacks />
+                : user.logged ? <AppStacks /> : <LoginStacks />
+                
                     
             }
         </NavigationContainer>
